@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ManVoMapper {
+	
 	int insert(ManVo record);
 
 	int insertSelective(ManVo record);
