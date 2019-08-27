@@ -1,5 +1,7 @@
 package group.slsd.service;
 
+import java.util.List;
+
 import group.slsd.vo.OwnerVo;
 
 public interface OwnerService {
@@ -17,6 +19,5 @@ public interface OwnerService {
 
     int updateByPrimaryKey(OwnerVo record);
     
-    
-	
+    List<OwnerVo> findAll();
 }

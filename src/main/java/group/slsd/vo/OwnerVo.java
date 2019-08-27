@@ -2,31 +2,38 @@ package group.slsd.vo;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class OwnerVo implements Serializable {
+	
+	
+	@ApiModelProperty("id")
     private Integer ownerId;
-
+    @ApiModelProperty("业主名字")
     private String ownerName;
-
+    @ApiModelProperty("用户名")
     private String uname;
-
+    @ApiModelProperty("密码")
     private String pwd;
-
+    @ApiModelProperty("房屋面积")
     private Float hsize;
-
+    @ApiModelProperty("居住人员数量")
     private Integer num;
-
+    @ApiModelProperty("电话")
     private String tel;
-
+    @ApiModelProperty("职业")
     private String pro;
-
+    @ApiModelProperty("门牌号")
     private Integer hourseId;
-
+    @ApiModelProperty("家庭地址")
     private String address;
-
+    @ApiModelProperty("是否有车")
     private Boolean iscar;
-
+    @ApiModelProperty("车牌号")
     private Integer carId;
-
+    @ApiModelProperty("车的类型")
     private String cartype;
 
     private static final long serialVersionUID = 1L;

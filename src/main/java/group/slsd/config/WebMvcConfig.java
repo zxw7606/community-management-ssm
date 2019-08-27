@@ -11,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -76,9 +79,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	 * 跨域支持
 	 * 
 	 */
-	// @Override
-	// public void addCorsMappings(CorsRegistry registry) {
-	// WebMvcConfigurer.super.addCorsMappings(registry);
-	// }
+
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**").allowedOrigins("*").allowCredentials(true)
+				.allowedMethods("GET", "POST", "DELETE", "PUT").maxAge(3600);
+	}
 
 }

@@ -26,6 +26,14 @@
     from owner
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </select>
+  
+   <select id="findAll" resultType="group.slsd.vo.OwnerVo">
+    select 
+    <include refid="Base_Column_List" />
+    from owner
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from owner
     where owner_id = #{ownerId,jdbcType=INTEGER}

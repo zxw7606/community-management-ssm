@@ -2,9 +2,12 @@ package group.slsd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import group.slsd.service.OwnerService;
+import group.slsd.vo.OwnerVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -23,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
  * @author 0
  * @date 2019年8月27日 上午9:08:05
  */
-
+@Api(tags = "测试")
 @RestController
 public class HelloController {
 
@@ -32,7 +35,7 @@ public class HelloController {
 
 	@ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
 	@RequestMapping("hello")
-	public Object hello() {
+	public Object selectByPrimaryKey() {
 		System.out.println("///");
 		return ownerService.selectByPrimaryKey(0);
 	}
