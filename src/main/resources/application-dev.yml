@@ -1,11 +1,11 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://192.168.137.3:3306/manager?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF8
+#    url: jdbc:mysql://192.168.43.152:3306/manager?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF8
+    url: jdbc:mysql://192.168.213.128:3307/manager?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-mybatis:
-  type-aliases-package: group.slsd.vo
-  mapper-locations: classpath:group/slsd/mapper/*.xml
-  
+logging:
+  level:
+    org.springframework.security: DEBUG

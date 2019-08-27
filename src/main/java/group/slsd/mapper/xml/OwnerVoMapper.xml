@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
 
 <mapper namespace="group.slsd.mapper.ownerVoMapper">
+=======
+<mapper namespace="group.slsd.mapper.OwnerVoMapper">
+>>>>>>> branch 'master' of https://github.com/zxw7606/community-management-ssm.git
   <resultMap id="BaseResultMap" type="group.slsd.vo.OwnerVo">
+<<<<<<< HEAD
    
+=======
+>>>>>>> branch 'master' of https://github.com/zxw7606/community-management-ssm.git
     <id column="owner_id" jdbcType="INTEGER" property="ownerId" />
     <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
     <result column="uname" jdbcType="VARCHAR" property="uname" />
@@ -22,7 +29,6 @@
     owner_id, owner_name, uname, pwd, hsize, num, tel, pro, hourse_id, address, iscar, 
     car_id, cartype
   </sql>
-  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -30,12 +36,22 @@
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </select>
   
+   <select id="findAll" resultType="group.slsd.vo.OwnerVo">
+    select 
+    <include refid="Base_Column_List" />
+    from owner
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from owner
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="group.slsd.vo.OwnerVo">
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/zxw7606/community-management-ssm.git
     insert into owner (owner_id, owner_name, uname, 
       pwd, hsize, num, tel, 
       pro, hourse_id, address, 
@@ -46,7 +62,10 @@
       #{iscar,jdbcType=BIT}, #{carId,jdbcType=INTEGER}, #{cartype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="group.slsd.vo.OwnerVo">
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/zxw7606/community-management-ssm.git
     insert into owner
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="ownerId != null">
@@ -132,8 +151,6 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.OwnerVo">
-   
-   
     update owner
     <set>
       <if test="ownerName != null">
@@ -175,7 +192,7 @@
     </set>
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.OwnerVo" >
+  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.OwnerVo">
     update owner
     set owner_name = #{ownerName,jdbcType=VARCHAR},
       uname = #{uname,jdbcType=VARCHAR},
@@ -191,6 +208,4 @@
       cartype = #{cartype,jdbcType=VARCHAR}
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </update>
-  
- 
 </mapper>

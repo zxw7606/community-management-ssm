@@ -1,25 +1,26 @@
+
 package group.slsd.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import group.slsd.vo.OwnerVo;
-/**
- * 业主
- * @author hang
- */
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface OwnerVoMapper {
+	int deleteByPrimaryKey(Integer ownerId);
 
-    int deleteByPrimaryKey(Integer ownerId);
+	int insert(OwnerVo record);
 
-    int insert(OwnerVo record);
+	int insertSelective(OwnerVo record);
 
-    int insertSelective(OwnerVo record);
+	OwnerVo selectByPrimaryKey(@Param("ownerId") Integer ownerId);
 
-    OwnerVo selectByPrimaryKey(Integer ownerId);
+	int updateByPrimaryKeySelective(OwnerVo record);
 
-    int updateByPrimaryKeySelective(OwnerVo record);
-
-    int updateByPrimaryKey(OwnerVo record);
+	int updateByPrimaryKey(OwnerVo record);
+	
+	List<OwnerVo> findAll();
 }

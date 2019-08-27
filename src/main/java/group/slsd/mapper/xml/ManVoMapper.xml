@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.slsd.mapper.ManVoMapper">
+  <resultMap id="BaseResultMap" type="group.slsd.vo.ManVo">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+  
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, username, pwd, phone, email, content
+    from man
+    where id = #{manId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findAll" resultType="group.slsd.vo.ManVo">
+    select id, username, pwd, phone, email, content
+    from man
+  </select>
+  
+  
+  
+  <insert id="insert" parameterType="group.slsd.vo.ManVo">
+    insert into man (id, username ,pwd, phone, 
+      email, content)
+    values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="group.slsd.vo.ManVo">
+    insert into man
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pwd != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+    
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from man
+    where id = #{manId,jdbcType=INTEGER}
+  </delete>
+  
+  
+  
+  
+  
+  <!-- 更新 -->
+  <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.ManVo">
+    update man
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null">
+        owner_name = #{owner_name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+</mapper>

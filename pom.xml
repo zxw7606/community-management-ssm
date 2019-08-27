@@ -23,12 +23,28 @@
 		<druid.version>1.1.10</druid.version>
 		<mysql.version>5.1.47</mysql.version>
 		<validator.version>6.0.15.Final</validator.version>
-		<!-- <mysql.version>8.0.15</mysql.version> -->
+		<swagger2.version>2.9.2</swagger2.version>
+		<pagehelper.version>1.2.12</pagehelper.version>
 	</properties>
 
 	<dependencies>
+		<!-- 分页插件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>${pagehelper.version}</version>
+		</dependency>
 
-
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger2.version}</version>
+		</dependency>
 
 		<!-- Mysql 和连接池 以及 事务支持 -->
 		<dependency>
@@ -79,6 +95,14 @@
 		</dependency>
 
 		<!-- 测试框架 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -100,6 +124,7 @@
 	</dependencies>
 
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
