@@ -5,9 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import group.slsd.vo.OwnerVo;
 /**
  * 业主
- * 
  * @author hang
- *
  */
 
 @Mapper

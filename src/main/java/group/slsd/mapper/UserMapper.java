@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface UserMapper {
-	int add(int a);
+	int insert(UserMapper user);
 	int selectByPrimaryKey(int UserId);
 	
 }
