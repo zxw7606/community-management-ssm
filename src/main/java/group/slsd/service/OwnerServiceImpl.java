@@ -30,8 +30,7 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Override
 	public OwnerVo selectByPrimaryKey(Integer ownerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return ownerVoMapper.selectByPrimaryKey(ownerId);
 	}
 
 	@Override

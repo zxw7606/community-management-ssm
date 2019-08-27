@@ -1,5 +1,0 @@
-	
-
-<insert id="add">
-	insert into xxxxxx where id  =#{a}
-</insert>
