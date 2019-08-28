@@ -17,16 +17,16 @@ public class DevicesServiceImpl implements DevicesService {
 
 	@Transactional
 	@Override
-	public int deleteByPrimaryKey(Integer ownerId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteByPrimaryKey(Integer devicesId) {
+		
+		return devicesVoMapper.deleteByPrimaryKey(devicesId);
 	}
 
 	@Transactional
 	@Override
 	public int insert(DevicesVo record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return devicesVoMapper.insert(record);
 	}
 
 	@Transactional
@@ -37,29 +37,29 @@ public class DevicesServiceImpl implements DevicesService {
 
 	@Transactional
 	@Override
-	public DevicesVo selectByPrimaryKey(Integer ownerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public DevicesVo selectByPrimaryKey(Integer devicesId) {
+		
+		return devicesVoMapper.selectByPrimaryKey(devicesId);
 	}
 
 	@Transactional
 	@Override
 	public int updateByPrimaryKeySelective(DevicesVo record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return devicesVoMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Transactional
 	@Override
 	public int updateByPrimaryKey(DevicesVo record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return devicesVoMapper.updateByPrimaryKey(record);
 	}
 
 	@Override
 	public List<DevicesVo> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return devicesVoMapper.findAll();
 	}
 
 }
