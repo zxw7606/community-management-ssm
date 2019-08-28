@@ -20,4 +20,8 @@ public interface OwnerService {
     int updateByPrimaryKey(OwnerVo record);
     
     List<OwnerVo> findAll();
+
+	int batchDeleteManByIds(Integer[] idIntegerArr);
+
+	List<OwnerVo> searchOwnersByParameter(OwnerVo ownerVo);
 }

@@ -55,4 +55,14 @@ public class OwnerServiceImpl implements OwnerService {
 		return ownerVoMapper.findAll();
 	}
 
+	@Override
+	public int batchDeleteManByIds(Integer[] idIntegerArr) {
+		return ownerVoMapper.batchDeleteManByIds(idIntegerArr);
+	}
+
+	@Override
+	public List<OwnerVo> searchOwnersByParameter(OwnerVo ownerVo) {
+		return ownerVoMapper.searchOwnersByParameter(ownerVo);
+	}
+
 }

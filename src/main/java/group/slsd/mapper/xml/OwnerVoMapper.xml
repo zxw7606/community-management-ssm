@@ -191,4 +191,61 @@
       cartype = #{cartype,jdbcType=VARCHAR}
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </update>
+  
+  
+  <delete id="batchDeleteManByIds"  parameterType = "int[]">
+  	delete from owner where owner_id in
+		<foreach collection="array" item="arr" index="no" open="("
+			separator="," close=")">
+			#{arr}
+		</foreach>
+  </delete>
+  
+  <select id="searchMansByParameter" resultType="group.slsd.vo.OwnerVo">
+     select 
+  	<include refid="Base_Column_List" />
+     from owner
+    <where>
+     <trim prefix="(" prefixOverrides="and" suffix=")">
+       <if test="ownerName != null">
+       AND owner_name LIKE CONCAT('%',#{ownerName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="uname != null">
+       AND uname LIKE CONCAT('%',#{uname,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="pwd != null">
+       AND pwd LIKE CONCAT('%',#{pwd,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="hsize != null">
+       AND hsize LIKE CONCAT('%',#{hsize,jdbcType=REAL},'%')
+      </if>
+      <if test="num != null">
+       AND num LIKE CONCAT('%',#{num,jdbcType=INTEGER},'%')
+      </if>
+      <if test="tel != null">
+       AND tel LIKE CONCAT('%',#{tel,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="pro != null">
+       AND pro LIKE CONCAT('%',#{pro,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="hourseId != null">
+       AND hourse_id LIKE CONCAT('%',#{hourseId,jdbcType=INTEGER},'%')
+      </if>
+      <if test="address != null">
+       AND address LIKE CONCAT('%',#{address,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="iscar != null">
+       AND iscar LIKE CONCAT('%',#{iscar,jdbcType=BIT},'%')
+      </if>
+      <if test="carId != null">
+       AND car_id LIKE CONCAT('%',#{carId,jdbcType=INTEGER},'%')
+      </if>
+      <if test="cartype != null">
+       AND cartype LIKE CONCAT('%',#{cartype,jdbcType=VARCHAR},'%')
+      </if>
+     </trim>
+    </where>
+    
+  </select>
+  
 </mapper>
