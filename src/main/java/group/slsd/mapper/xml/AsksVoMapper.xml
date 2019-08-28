@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.slsd.mapper.AsksVoMapper">
+  <resultMap id="BaseResultMap" type="group.slsd.vo.AsksVo">
+    <result column="aid" jdbcType="INTEGER" property="aId" />
+    <result column="atarget" jdbcType="VARCHAR" property="aTarget" />
+    <result column="content" jdbcType="VARCHAR" property="aContent" />
+    <result column="personid" jdbcType="INTEGER" property="aPersonId" />
+    <result column="empid" jdbcType="INTEGER" property="aEmpId" />
+    <result column="result" jdbcType="VARCHAR" property="aResult" />
+    <result column="time" jdbcType="DATE" property="aTime" />
+  </resultMap>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select aid, atarget, content, personid, empid, result, time
+    from asks
+    where id = #{aid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findAll" resultType="group.slsd.vo.AsksVo">
+    select aid, atarget, content, personid, empid, result, time
+    from asks
+  </select>
+  
+  <insert id="insert" parameterType="group.slsd.vo.AsksVo">
+    insert into asks (aid, atarget, content, personid, empid, result, time)
+    values (#{aId,jdbcType=INTEGER},#{aTarget,jdbcType=VARCHAR}, #{aContent,jdbcType=VARCHAR}, #{aPersonId,jdbcType=INTEGER}, 
+      #{aEmpId,jdbcType=INTEGER}, #{aResult,jdbcType=VARCHAR}, #{aTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="group.slsd.vo.AsksVo">
+    insert into asks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        aid,
+      </if>
+      <if test="aTarget != null">
+        atarget,
+      </if>
+      <if test="aContent != null">
+        content,
+      </if>
+      <if test="aPersonId != null">
+        personid,
+      </if>
+      <if test="aEmpId != null">
+        empid,
+      </if>
+      <if test="aResult != null">
+        result,
+      </if>
+      <if test="aTime != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="aTarget != null">
+        #{aTarget,jdbcType=VARCHAR}, 
+      </if>
+      <if test="aContent != null">
+        #{aContent,jdbcType=VARCHAR},
+      </if>
+      <if test="aPersonId != null">
+         #{aPersonId,jdbcType=INTEGER}, 
+      </if>
+      <if test="aEmpId != null">
+        #{aEmpId,jdbcType=INTEGER}, 
+      </if>
+      <if test="aResult != null">
+        #{aResult,jdbcType=VARCHAR},
+      </if>
+      <if test="aTime != null">
+         #{aTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from asks
+    where id = #{aId,jdbcType=INTEGER}
+  </delete>
+
+  <!-- 更新 -->
+  <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.AsksVo">
+    update asks
+    <set>
+      <if test="aTarget != null">
+       atarget = #{aTarget,jdbcType=VARCHAR}, 
+      </if>
+      <if test="aContent != null">
+       content = #{aContent,jdbcType=VARCHAR},
+      </if>
+      <if test="aPersonId != null">
+       personid = #{aPersonId,jdbcType=INTEGER}, 
+      </if>
+      <if test="aEmpId != null">
+       empid = #{aEmpId,jdbcType=INTEGER}, 
+      </if>
+      <if test="aResult != null">
+       result = #{aResult,jdbcType=VARCHAR},
+      </if>
+      <if test="aTime != null">
+        time = #{aTime,jdbcType=DATE},
+      </if>
+    </set>
+    where aid = #{aId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.AsksVo">
+  	update asks
+  	set atarget = #{aTarget,jdbcType=VARCHAR},
+  	  content = #{aContent,jdbcType=VARCHAR},
+      personid = #{aPersonId,jdbcType=INTEGER}, 
+      empid = #{aEmpId,jdbcType=INTEGER},
+      result = #{aResult,jdbcType=VARCHAR},
+      time = #{aTime,jdbcType=DATE},
+    where aid = #{aId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

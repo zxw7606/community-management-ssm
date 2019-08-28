@@ -6,13 +6,13 @@ import group.slsd.vo.DevicesVo;;
 
 public interface DevicesService {
 
-	int deleteByPrimaryKey(Integer ownerId);
+	int deleteByPrimaryKey(Integer devicesId);
 
     int insert(DevicesVo record);
 
     int insertSelective(DevicesVo record);
 
-    DevicesVo selectByPrimaryKey(Integer ownerId);
+    DevicesVo selectByPrimaryKey(Integer devicesId);
 
     int updateByPrimaryKeySelective(DevicesVo record);
 
