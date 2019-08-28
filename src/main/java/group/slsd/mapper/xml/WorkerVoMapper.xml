@@ -1,136 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group.slsd.mapper.WorkerVoMapper">
-  <resultMap id="BaseResultMap" type="group.slsd.vo.WorkerVo">
-    <id column="emp_id" jdbcType="INTEGER" property="empId" />
-    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
-    <result column="u_name" jdbcType="VARCHAR" property="uName" />
-    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
-    <result column="emp_position" jdbcType="VARCHAR" property="empPosition" />
-    <result column="emp_tel" jdbcType="VARCHAR" property="empTel" />
-    <result column="emp_descript" jdbcType="VARCHAR" property="empDescript" />
-    <result column="roles" jdbcType="VARCHAR" property="roles" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    emp_id, emp_name, u_name, pwd, emp_position, emp_tel, emp_descript, roles
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from worker
-    where emp_id = #{empId,jdbcType=INTEGER}
-  </select>
-  
-  <select id="findAll" resultType="group.slsd.vo.OwnerVo">
-    select 
-    <include refid="Base_Column_List" />
-    from worker
-  </select>
-  
- 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from worker
-    where emp_id = #{empId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="group.slsd.vo.WorkerVo">
-    insert into worker (emp_id, emp_name, u_name, 
-      pwd, emp_position, emp_tel, 
-      emp_descript, roles)
-    values (#{empId,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR}, #{uName,jdbcType=VARCHAR}, 
-      #{pwd,jdbcType=VARCHAR}, #{empPosition,jdbcType=VARCHAR}, #{empTel,jdbcType=VARCHAR}, 
-      #{empDescript,jdbcType=VARCHAR}, #{roles,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="group.slsd.vo.WorkerVo">
-    insert into worker
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="empId != null">
-        emp_id,
-      </if>
-      <if test="empName != null">
-        emp_name,
-      </if>
-      <if test="uName != null">
-        u_name,
-      </if>
-      <if test="pwd != null">
-        pwd,
-      </if>
-      <if test="empPosition != null">
-        emp_position,
-      </if>
-      <if test="empTel != null">
-        emp_tel,
-      </if>
-      <if test="empDescript != null">
-        emp_descript,
-      </if>
-      <if test="roles != null">
-        roles,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="empId != null">
-        #{empId,jdbcType=INTEGER},
-      </if>
-      <if test="empName != null">
-        #{empName,jdbcType=VARCHAR},
-      </if>
-      <if test="uName != null">
-        #{uName,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null">
-        #{pwd,jdbcType=VARCHAR},
-      </if>
-      <if test="empPosition != null">
-        #{empPosition,jdbcType=VARCHAR},
-      </if>
-      <if test="empTel != null">
-        #{empTel,jdbcType=VARCHAR},
-      </if>
-      <if test="empDescript != null">
-        #{empDescript,jdbcType=VARCHAR},
-      </if>
-      <if test="roles != null">
-        #{roles,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.WorkerVo">
-    update worker
-    <set>
-      <if test="empName != null">
-        emp_name = #{empName,jdbcType=VARCHAR},
-      </if>
-      <if test="uName != null">
-        u_name = #{uName,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null">
-        pwd = #{pwd,jdbcType=VARCHAR},
-      </if>
-      <if test="empPosition != null">
-        emp_position = #{empPosition,jdbcType=VARCHAR},
-      </if>
-      <if test="empTel != null">
-        emp_tel = #{empTel,jdbcType=VARCHAR},
-      </if>
-      <if test="empDescript != null">
-        emp_descript = #{empDescript,jdbcType=VARCHAR},
-      </if>
-      <if test="roles != null">
-        roles = #{roles,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where emp_id = #{empId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.WorkerVo">
-    update worker
-    set emp_name = #{empName,jdbcType=VARCHAR},
-      u_name = #{uName,jdbcType=VARCHAR},
-      pwd = #{pwd,jdbcType=VARCHAR},
-      emp_position = #{empPosition,jdbcType=VARCHAR},
-      emp_tel = #{empTel,jdbcType=VARCHAR},
-      emp_descript = #{empDescript,jdbcType=VARCHAR},
-      roles = #{roles,jdbcType=VARCHAR}
-    where emp_id = #{empId,jdbcType=INTEGER}
-  </update>
+	<resultMap id="BaseResultMap" type="group.slsd.vo.WorkerVo">
+		<id column="emp_id" jdbcType="INTEGER" property="empId" />
+		<result column="emp_name" jdbcType="VARCHAR" property="empName" />
+		<result column="u_name" jdbcType="VARCHAR" property="uName" />
+		<result column="pwd" jdbcType="VARCHAR" property="pwd" />
+		<result column="emp_position" jdbcType="VARCHAR" property="empPosition" />
+		<result column="emp_tel" jdbcType="VARCHAR" property="empTel" />
+		<result column="emp_descript" jdbcType="VARCHAR" property="empDescript" />
+		<result column="roles" jdbcType="VARCHAR" property="roles" />
+	</resultMap>
+
+	<sql id="Base_Column_List"> 
+		emp_id, emp_name, u_name, pwd, emp_position, emp_tel, emp_descript, roles
+	</sql>
+
+	<select id="selectByPrimaryKey"	parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from worker
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</select>
+
+	<select id="findAll" resultType="group.slsd.vo.WorkerVo">
+		select
+		<include refid="Base_Column_List" />
+		from worker
+	</select>
+
+	<select id="searchWorkerByParameter" resultType="group.slsd.vo.WorkerVo">
+		select 
+		<include refid="Base_Column_List" />
+		from worker
+		<where>
+			<trim prefix="(" prefixOverrides="and" suffix=")">
+			<if test="empId != null">
+				AND emp_id LIKE CONCAT('%', #{empId,jdbcType=INTEGER},'%')
+			</if>
+			<if test="empName != null">
+				AND emp_name LIKE CONCAT('%', #{empName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="uName != null">
+				AND u_name LIKE CONCAT('%', #{uName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="pwd != null">
+				AND pwd LIKE CONCAT('%',#{pwd,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="empPosition != null">
+				AND emp_position LIKE CONCAT('%', #{empPosition,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="empTel != null">
+				AND emp_tel LIKE CONCAT('%',#{empTel,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="empDescript != null">
+				AND emp_descript LIKE CONCAT('%',#{empDescript,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="roles != null">
+				AND roles LIKE CONCAT('%',#{roles,jdbcType=VARCHAR},'%')
+			</if>
+			</trim>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="group.slsd.vo.WorkerVo"> 
+		insert into worker (emp_id,	emp_name, u_name, pwd, emp_position, emp_tel, emp_descript, roles)
+		values (#{empId,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR},	#{uName,jdbcType=VARCHAR},
+		#{pwd,jdbcType=VARCHAR}, #{empPosition,jdbcType=VARCHAR}, #{empTel,jdbcType=VARCHAR},
+		#{empDescript,jdbcType=VARCHAR}, #{roles,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertSelective" parameterType="group.slsd.vo.WorkerVo">
+		insert into worker
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="empId != null">
+				emp_id,
+			</if>
+			<if test="empName != null">
+				emp_name,
+			</if>
+			<if test="uName != null">
+				u_name,
+			</if>
+			<if test="pwd != null">
+				pwd,
+			</if>
+			<if test="empPosition != null">
+				emp_position,
+			</if>
+			<if test="empTel != null">
+				emp_tel,
+			</if>
+			<if test="empDescript != null">
+				emp_descript,
+			</if>
+			<if test="roles != null">
+				roles,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="empId != null">
+				#{empId,jdbcType=INTEGER},
+			</if>
+			<if test="empName != null">
+				#{empName,jdbcType=VARCHAR},
+			</if>
+			<if test="uName != null">
+				#{uName,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				#{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="empPosition != null">
+				#{empPosition,jdbcType=VARCHAR},
+			</if>
+			<if test="empTel != null">
+				#{empTel,jdbcType=VARCHAR},
+			</if>
+			<if test="empDescript != null">
+				#{empDescript,jdbcType=VARCHAR},
+			</if>
+			<if test="roles != null">
+				#{roles,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="deleteByPrimaryKey"	parameterType="java.lang.Integer">
+		delete from worker
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</delete>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.WorkerVo">
+		update worker
+		<set>
+			<if test="empName != null">
+				emp_name = #{empName,jdbcType=VARCHAR},
+			</if>
+			<if test="uName != null">
+				u_name = #{uName,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="empPosition != null">
+				emp_position = #{empPosition,jdbcType=VARCHAR},
+			</if>
+			<if test="empTel != null">
+				emp_tel = #{empTel,jdbcType=VARCHAR},
+			</if>
+			<if test="empDescript != null">
+				emp_descript = #{empDescript,jdbcType=VARCHAR},
+			</if>
+			<if test="roles != null">
+				roles = #{roles,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"	parameterType="group.slsd.vo.WorkerVo">
+		update worker
+		set emp_name = #{empName,jdbcType=VARCHAR},
+		u_name = #{uName,jdbcType=VARCHAR},
+		pwd = #{pwd,jdbcType=VARCHAR},
+		emp_position = #{empPosition,jdbcType=VARCHAR},
+		emp_tel = #{empTel,jdbcType=VARCHAR},
+		emp_descript = #{empDescript,jdbcType=VARCHAR},
+		roles = #{roles,jdbcType=VARCHAR}
+		where emp_id = #{empId,jdbcType=INTEGER}
+	</update>
+	
+	<delete id="batchDeleteWorkerByIds" parameterType="int[]">
+		delete from worker where emp_id in
+		<foreach collection="array" item="arr" index="no" open="("
+			separator="," close=")">
+			#{arr}
+		</foreach>
+	</delete>
 </mapper>

@@ -55,4 +55,14 @@ public class WokerServiceImpl implements WorkerService {
 		return workerVoMapper.findAll();
 	}
 
+	@Override
+	public int batchDeleteWorkerByIds(Integer[] ids) {
+		return workerVoMapper.batchDeleteWorkerByIds(ids);
+	}
+
+	@Override
+	public List<WorkerVo> searchWorkerByParameter(WorkerVo workerVo) {
+		return workerVoMapper.searchWorkerByParameter(workerVo);
+	}
+
 }

@@ -6,18 +6,22 @@ import group.slsd.vo.WorkerVo;
 
 public interface WorkerService {
 	
+	 int insert(WorkerVo record);
 
-    int deleteByPrimaryKey(Integer ownerId);
+	    int insertSelective(WorkerVo record);
 
-    int insert(WorkerVo record);
+	    List<WorkerVo> findAll();
+	    
+	    WorkerVo selectByPrimaryKey(Integer empId);
+	    
+	    int deleteByPrimaryKey(Integer empId);
 
-    int insertSelective(WorkerVo record);
+	    int updateByPrimaryKeySelective(WorkerVo record);
 
-    WorkerVo selectByPrimaryKey(Integer ownerId);
+	    int updateByPrimaryKey(WorkerVo record);
 
-    int updateByPrimaryKeySelective(WorkerVo record);
+		int batchDeleteWorkerByIds(Integer[] ids);
 
-    int updateByPrimaryKey(WorkerVo record);
-    
-    List<WorkerVo> findAll();
+		List<WorkerVo> searchWorkerByParameter(WorkerVo workerVo);
+	    
 }

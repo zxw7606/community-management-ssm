@@ -55,4 +55,14 @@ public class DevicesServiceImpl implements DevicesService {
 		return devicesVoMapper.findAll();
 	}
 
+	@Override
+	public int batchDeleteDevicesByIds(Integer[] ids) {
+		return devicesVoMapper.batchDeleteDevicesByIds(ids);
+	}
+
+	@Override
+	public List<DevicesVo> searchDevicesByParameter(DevicesVo devicesVo) {
+		return devicesVoMapper.searchDevicesByParameter(devicesVo);
+	}
+
 }

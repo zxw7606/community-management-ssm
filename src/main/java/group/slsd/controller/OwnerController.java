@@ -39,6 +39,7 @@ public class OwnerController {
 		return ResponseEntity.ok("200");
 	}
 
+	@ApiOperation("获取所有业主")
 	@GetMapping("getAllOwner")
 	public Object getOwner() {
 //		Page<Object> page = PageHelper.startPage(1, 3);
@@ -95,6 +96,5 @@ public class OwnerController {
 		log.info("ownerId = {} , num = {} ", ownerId, num);
 		return ResponseEntity.ok("200");
 	}
-
 
 }

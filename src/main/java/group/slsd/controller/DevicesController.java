@@ -17,14 +17,15 @@ import com.github.pagehelper.PageInfo;
 
 import group.slsd.service.DevicesService;
 import group.slsd.vo.DevicesVo;
-import group.slsd.vo.ManVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Api(tags = "设备")
 @RequestMapping("/devices")
+@Slf4j
 public class DevicesController {
 
 	@Autowired
@@ -37,8 +38,8 @@ public class DevicesController {
 		return ResponseEntity.ok("200");
 	}
 	
-	@ApiOperation("获取设备")
-	@GetMapping
+	@ApiOperation("获取所有设备")
+	@GetMapping("getAllDevices")
 	public Object getDevices() {
 //		Page<Object> page = PageHelper.startPage(1,3);
 		List<DevicesVo> list = devicesService.findAll();
@@ -55,47 +56,44 @@ public class DevicesController {
 		return devicesService.selectByPrimaryKey(dId);
 	}
 	
+	@ApiOperation("根据Id删除设备")
+	@PostMapping("deleteDevicesById")
+	public ResponseEntity<String> deleteByPrimaryKey(@ApiParam("管理员主键") @RequestParam(required = true) Integer dId) {
+		log.info("dId = {}", dId);
+		int num = devicesService.deleteByPrimaryKey(dId);
+		log.info("dId = {} , num = {} ", dId, num);
+		return ResponseEntity.ok("200");
+	}
 
+	@ApiOperation("更新管理员字段")
+	@PostMapping("updateDevicesById")
+	public ResponseEntity<String> updateDevicesById(@ApiParam("管理员实体")  DevicesVo devicesVo) {
+		int num = devicesService.updateByPrimaryKeySelective(devicesVo);
+		log.info(" num = {} ", num);
+		return ResponseEntity.ok("200");
+	}
+
+	@ApiOperation("批量删除管理员")
+	@PostMapping("batchDeleteDevicessById")
+	public ResponseEntity<String> batchDeleteDevicessById(@RequestParam String ids) {
+		String[] idStringArr = ids.split(",");
+		Integer[] idIntegerArr = new Integer[idStringArr.length];
+		for (int i = 0; i < idStringArr.length; i++) {
+			idIntegerArr[i] = Integer.valueOf(idStringArr[i]);
+		}
+
+		int num = devicesService.batchDeleteDevicesByIds(idIntegerArr);
+		log.info(" num = {} ", num);
+		return ResponseEntity.ok("200");
+	}
 	
-	
-//	@ApiOperation("根据Id删除管理员")
-//	@PostMapping("deleteManById")
-//	public ResponseEntity<String> deleteByPrimaryKey(@ApiParam("管理员主键") @RequestParam(required = true) Integer manId) {
-//		log.info("manId = {}", manId);
-//		int num = manVoService.deleteByPrimaryKey(manId);
-//		log.info("manId = {} , num = {} ", manId, num);
-//		return ResponseEntity.ok("200");
-//	}
-//
-//	@ApiOperation("更新管理员字段")
-//	@PostMapping("updateManById")
-//	public ResponseEntity<String> updateManById(@ApiParam("管理员实体")  ManVo manVo) {
-//		int num = manVoService.updateByPrimaryKeySelective(manVo);
-//		log.info(" num = {} ", num);
-//		return ResponseEntity.ok("200");
-//	}
-//
-//	@ApiOperation("批量删除管理员")
-//	@PostMapping("batchDeleteMansById")
-//	public ResponseEntity<String> batchDeleteMansById(@RequestParam String ids) {
-//		String[] idStringArr = ids.split(",");
-//		Integer[] idIntegerArr = new Integer[idStringArr.length];
-//		for (int i = 0; i < idStringArr.length; i++) {
-//			idIntegerArr[i] = Integer.valueOf(idStringArr[i]);
-//		}
-//
-//		int num = manVoService.batchDeleteManByIds(idIntegerArr);
-//		log.info(" num = {} ", num);
-//		return ResponseEntity.ok("200");
-//	}
-//	
-//	@ApiOperation("通过字段查询管理员")
-//	@GetMapping("searchMansByParameter")
-//	public List searchMansByParameter(@ApiParam("管理员查询字段") ManVo manVo) {
-//		
-//		List<ManVo> manList =  manVoService.searchMansByParameter(manVo);
-//		return manList;
-//	}
+	@ApiOperation("通过字段查询管理员")
+	@GetMapping("searchDevicessByParameter")
+	public List searchDevicessByParameter(@ApiParam("管理员查询字段") DevicesVo devicesVo) {
+		
+		List<DevicesVo> devicesList =  devicesService.searchDevicesByParameter(devicesVo);
+		return devicesList;
+	}
 
 	
 }
