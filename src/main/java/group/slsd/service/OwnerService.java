@@ -21,7 +21,7 @@ public interface OwnerService {
     
     List<OwnerVo> findAll();
 
-	int batchDeleteManByIds(Integer[] idIntegerArr);
+	int batchDeleteOwnerByIds(Integer[] idIntegerArr);
 
 	List<OwnerVo> searchOwnersByParameter(OwnerVo ownerVo);
 }

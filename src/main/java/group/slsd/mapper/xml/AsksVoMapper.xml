@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group.slsd.mapper.AsksVoMapper">
   <resultMap id="BaseResultMap" type="group.slsd.vo.AsksVo">
-    <result column="aid" jdbcType="INTEGER" property="aId" />
+    <id column="aid" jdbcType="INTEGER" property="aId" />
     <result column="atarget" jdbcType="VARCHAR" property="aTarget" />
     <result column="content" jdbcType="VARCHAR" property="aContent" />
     <result column="personid" jdbcType="INTEGER" property="aPersonId" />
@@ -11,22 +11,34 @@
     <result column="time" jdbcType="DATE" property="aTime" />
   </resultMap>
   
+  <sql id="Base_Column_List">
+  	aid, atarget, content, personid, empid, result, time
+  </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select aid, atarget, content, personid, empid, result, time
+    select 
+	<include refid="Base_Column_List" />
     from asks
     where id = #{aid,jdbcType=INTEGER}
   </select>
   
   <select id="findAll" resultType="group.slsd.vo.AsksVo">
-    select aid, atarget, content, personid, empid, result, time
+    select 
+	<include refid="Base_Column_List" />
     from asks
   </select>
+    
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from asks
+    where id = #{aId,jdbcType=INTEGER}
+  </delete>
   
   <insert id="insert" parameterType="group.slsd.vo.AsksVo">
     insert into asks (aid, atarget, content, personid, empid, result, time)
     values (#{aId,jdbcType=INTEGER},#{aTarget,jdbcType=VARCHAR}, #{aContent,jdbcType=VARCHAR}, #{aPersonId,jdbcType=INTEGER}, 
       #{aEmpId,jdbcType=INTEGER}, #{aResult,jdbcType=VARCHAR}, #{aTime,jdbcType=DATE})
   </insert>
+  
   <insert id="insertSelective" parameterType="group.slsd.vo.AsksVo">
     insert into asks
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -76,11 +88,6 @@
       </if>
     </trim>
   </insert>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from asks
-    where id = #{aId,jdbcType=INTEGER}
-  </delete>
 
   <!-- 更新 -->
   <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.AsksVo">
@@ -119,4 +126,39 @@
     where aid = #{aId,jdbcType=INTEGER}
   </update>
   
+   <delete id="batchDeleteAsksByIds"  parameterType = "int[]">
+  	delete from asks where aid in
+		<foreach collection="array" item="arr" index="no" open="("
+			separator="," close=")">
+			#{arr}
+		</foreach>
+  </delete>
+    
+  <select id="searchAsksByParameter" resultType="group.slsd.vo.AsksVo">
+     select 
+  	<include refid="Base_Column_List" />
+     from asks
+    <where>
+     <trim prefix="(" prefixOverrides="and" suffix=")">
+      <if test="aTarget != null">
+       AND atarget LIKE CONCAT('%', #{aTarget,jdbcType=VARCHAR},'%') 
+      </if>
+      <if test="aContent != null">
+       AND content LIKE CONCAT('%', #{aContent,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="aPersonId != null">
+       AND personid LIKE CONCAT('%', #{aPersonId,jdbcType=INTEGER},'%') 
+      </if>
+      <if test="aEmpId != null">
+       AND empid LIKE CONCAT('%', #{aEmpId,jdbcType=INTEGER}, '%') 
+      </if>
+      <if test="aResult != null">
+       AND result LIKE CONCAT('%', #{aResult,jdbcType=VARCHAR},'%') 
+      </if>
+      <if test="aTime != null">
+       AND time LIKE CONCAT('%', #{aTime,jdbcType=DATE},'%') 
+      </if>
+     </trim>
+    </where>
+  </select>
 </mapper>

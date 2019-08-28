@@ -27,7 +27,7 @@
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </select>
   
-   <select id="findAll" resultType="group.slsd.vo.OwnerVo">
+   <select id="findAll" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from owner
@@ -193,7 +193,7 @@
   </update>
   
   
-  <delete id="batchDeleteManByIds"  parameterType = "int[]">
+  <delete id="batchDeleteOwnerByIds"  parameterType = "int[]">
   	delete from owner where owner_id in
 		<foreach collection="array" item="arr" index="no" open="("
 			separator="," close=")">
@@ -201,7 +201,7 @@
 		</foreach>
   </delete>
   
-  <select id="searchMansByParameter" resultType="group.slsd.vo.OwnerVo">
+  <select id="searchOwnersByParameter" resultType="group.slsd.vo.OwnerVo">
      select 
   	<include refid="Base_Column_List" />
      from owner

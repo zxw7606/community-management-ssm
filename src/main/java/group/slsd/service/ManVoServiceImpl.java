@@ -36,7 +36,8 @@ public class ManVoServiceImpl {
 	public int deleteByPrimaryKey(Integer manId) {
 		return manVoMapper.deleteByPrimaryKey(manId);
 	}
-
+	
+	@Transactional
 	public int updateByPrimaryKeySelective(ManVo manVo) {
 		return manVoMapper.updateByPrimaryKeySelective(manVo);
 	}

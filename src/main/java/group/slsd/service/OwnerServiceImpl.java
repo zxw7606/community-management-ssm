@@ -56,8 +56,8 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public int batchDeleteManByIds(Integer[] idIntegerArr) {
-		return ownerVoMapper.batchDeleteManByIds(idIntegerArr);
+	public int batchDeleteOwnerByIds(Integer[] idIntegerArr) {
+		return ownerVoMapper.batchDeleteOwnerByIds(idIntegerArr);
 	}
 
 	@Override

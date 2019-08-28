@@ -41,14 +41,14 @@ public class OwnerController {
 
 	@GetMapping("getAllOwner")
 	public Object getOwner() {
-		Page<Object> page = PageHelper.startPage(1, 3);
+//		Page<Object> page = PageHelper.startPage(1, 3);
 		List<OwnerVo> list = ownerService.findAll();
 //		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		HashMap<String,Object> map = new HashMap<String, Object>();
-		PageInfo<Object> pageInfo = new PageInfo<>(page.getResult());
-		map.put("page", pageInfo);
-		map.put("data", list);
-		return map;
+//		HashMap<String,Object> map = new HashMap<String, Object>();
+//		PageInfo<Object> pageInfo = new PageInfo<>(page.getResult());
+//		map.put("page", pageInfo);
+//		map.put("data", list);
+		return list;
 	}
 
 	@ApiOperation(value = "根据主键查询业主", notes = "根据url的id来获取用户详细信息")
@@ -60,27 +60,27 @@ public class OwnerController {
 	@ApiOperation("通过字段查询业主")
 	@GetMapping("searchOwnersByParameter")
 	public List searchOwnersByParameter(@ApiParam("业主查询字段") OwnerVo ownerVo) {
-		List<OwnerVo> manList =  ownerService.searchOwnersByParameter(ownerVo);
-		return manList;
+		List<OwnerVo> ownerList =  ownerService.searchOwnersByParameter(ownerVo);
+		return ownerList;
 	}
 	
 	@ApiOperation("批量删除业主")
-	@PostMapping("batchDeleteMansById")
-	public ResponseEntity<String> batchDeleteMansById(@RequestParam String ids) {
+	@PostMapping("batchDeleteOwnersById")
+	public ResponseEntity<String> batchDeleteownersById(@RequestParam String ids) {
 		String[] idStringArr = ids.split(",");
 		Integer[] idIntegerArr = new Integer[idStringArr.length];
 		for (int i = 0; i < idStringArr.length; i++) {
 			idIntegerArr[i] = Integer.valueOf(idStringArr[i]);
 		}
 
-		int num = ownerService.batchDeleteManByIds(idIntegerArr);
+		int num = ownerService.batchDeleteOwnerByIds(idIntegerArr);
 		log.info(" num = {} ", num);
 		return ResponseEntity.ok("200");
 	}
 	
 	@ApiOperation("更新业主字段")
-	@PostMapping("updateManById")
-	public ResponseEntity<String> updateManById(@ApiParam("管理员实体")  OwnerVo ownerVo) {
+	@PostMapping("updateownerById")
+	public ResponseEntity<String> updateOwnerById(@ApiParam("管理员实体")  OwnerVo ownerVo) {
 		int num = ownerService.updateByPrimaryKeySelective(ownerVo);
 		log.info(" num = {} ", num);
 		return ResponseEntity.ok("200");
@@ -88,7 +88,7 @@ public class OwnerController {
 	
 	
 	@ApiOperation("根据Id删除业主")
-	@PostMapping("deleteManById")
+	@PostMapping("deleteOwnerById")
 	public ResponseEntity<String> deleteByPrimaryKey(@ApiParam("业主主键") @RequestParam(required = true) Integer ownerId) {
 		log.info("ownerId = {}", ownerId);
 		int num = ownerService.deleteByPrimaryKey(ownerId);

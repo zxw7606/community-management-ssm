@@ -15,28 +15,22 @@ public class DevicesServiceImpl implements DevicesService {
 	@Autowired
 	private DevicesVoMapper devicesVoMapper;
 
-	@Transactional
-	@Override
 	public int deleteByPrimaryKey(Integer devicesId) {
 		
 		return devicesVoMapper.deleteByPrimaryKey(devicesId);
 	}
 
 	@Transactional
-	@Override
 	public int insert(DevicesVo record) {
 		
 		return devicesVoMapper.insert(record);
 	}
 
 	@Transactional
-	@Override
 	public int insertSelective(DevicesVo record) {
 		return devicesVoMapper.insertSelective(record);
 	}
 
-	@Transactional
-	@Override
 	public DevicesVo selectByPrimaryKey(Integer devicesId) {
 		
 		return devicesVoMapper.selectByPrimaryKey(devicesId);
@@ -56,7 +50,6 @@ public class DevicesServiceImpl implements DevicesService {
 		return devicesVoMapper.updateByPrimaryKey(record);
 	}
 
-	@Override
 	public List<DevicesVo> findAll() {
 		
 		return devicesVoMapper.findAll();
