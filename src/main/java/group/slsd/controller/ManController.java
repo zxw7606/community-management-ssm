@@ -18,6 +18,7 @@ import group.slsd.service.WorkerService;
 import group.slsd.vo.ManVo;
 import group.slsd.vo.WorkerVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +47,9 @@ public class ManController {
 	}
 
 	@ApiOperation(value = "根据主键查询管理员")
+//	@ApiImplicitParam(paramType="path", name = "manId", value = "用户ID", required = true, dataType = "Integer")
 	@GetMapping("/getManById/{manId}")
-	public Object selectByPrimaryKey(@PathVariable("manId") Integer manId) {
+	public Object selectByPrimaryKey(@PathVariable("manId") @ApiParam("用户id") Integer manId) {
 		return manVoService.selectByPrimaryKey(manId);
 	}
 
@@ -62,7 +64,7 @@ public class ManController {
 
 	@ApiOperation("更新管理员字段")
 	@PostMapping("updateManById")
-	public ResponseEntity<String> updateManById(@ApiParam("管理员实体") @RequestParam ManVo manVo) {
+	public ResponseEntity<String> updateManById(@ApiParam("管理员实体")  ManVo manVo) {
 		int num = manVoService.updateByPrimaryKeySelective(manVo);
 		log.info(" num = {} ", num);
 		return ResponseEntity.ok("200");

@@ -41,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().frameOptions().disable();
+		
 		http.cors().and().csrf().disable().authorizeRequests()
 				// 处理跨域请求中的Preflight请求
 				.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
