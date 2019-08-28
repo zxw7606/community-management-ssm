@@ -40,7 +40,7 @@ public class ManController {
 	@ApiOperation("获取所有管理员")
 	@GetMapping("getAllMan")
 	public Object getWorker() {
-		
+
 		List<ManVo> manlist = manVoService.findAll();
 		return manlist;
 	}
@@ -50,22 +50,44 @@ public class ManController {
 	public Object selectByPrimaryKey(@PathVariable("manId") Integer manId) {
 		return manVoService.selectByPrimaryKey(manId);
 	}
-	
+
 	@ApiOperation("根据Id删除管理员")
 	@PostMapping("deleteManById")
-	public ResponseEntity<String> deleteByPrimaryKey(@ApiParam("管理员主键") @RequestParam(required = true)Integer manId) {
-		log.info("manId = {}",manId);
+	public ResponseEntity<String> deleteByPrimaryKey(@ApiParam("管理员主键") @RequestParam(required = true) Integer manId) {
+		log.info("manId = {}", manId);
 		int num = manVoService.deleteByPrimaryKey(manId);
-		log.info("manId = {} , num = {} ",manId, num);
+		log.info("manId = {} , num = {} ", manId, num);
 		return ResponseEntity.ok("200");
 	}
+
 	@ApiOperation("更新管理员字段")
 	@PostMapping("updateManById")
-	public ResponseEntity<String> updateManById(@ApiParam("管理员实体") @RequestParam ManVo manVo){
+	public ResponseEntity<String> updateManById(@ApiParam("管理员实体") @RequestParam ManVo manVo) {
 		int num = manVoService.updateByPrimaryKeySelective(manVo);
 		log.info(" num = {} ", num);
 		return ResponseEntity.ok("200");
 	}
+
+	@ApiOperation("批量删除管理员")
+	@PostMapping("batchDeleteMansById")
+	public ResponseEntity<String> batchDeleteMansById(@RequestParam String ids) {
+		String[] idStringArr = ids.split(",");
+		Integer[] idIntegerArr = new Integer[idStringArr.length];
+		for (int i = 0; i < idStringArr.length; i++) {
+			idIntegerArr[i] = Integer.valueOf(idStringArr[i]);
+		}
+
+		int num = manVoService.batchDeleteManByIds(idIntegerArr);
+		log.info(" num = {} ", num);
+		return ResponseEntity.ok("200");
+	}
 	
+	@ApiOperation("通过字段查询管理员")
+	@GetMapping("searchMansByParameter")
+	public List searchMansByParameter(@ApiParam("管理员查询字段") ManVo manVo) {
+		
+		List<ManVo> manList =  manVoService.searchMansByParameter(manVo);
+		return manList;
+	}
 
 }

@@ -22,7 +22,34 @@
     select id, username, pwd, phone, email, content
     from man
   </select>
-  
+   
+   <select id="searchMansByParameter" resultType="group.slsd.vo.ManVo">
+    select id, username, pwd, phone, email, content
+    from man 
+    <where>
+     <trim prefix="(" prefixOverrides="and" suffix=")">
+      <if test="id != null">
+         AND id LIKE CONCAT('%',#{id,jdbcType=INTEGER},'%')
+      </if>
+      <if test="username != null">
+         AND username LIKE CONCAT('%',#{username,jdbcType=INTEGER},'%')
+      </if>
+      <if test="pwd != null">
+         AND pwd LIKE CONCAT('%',#{pwd,jdbcType=INTEGER},'%')
+      </if>
+      <if test="phone != null">
+         AND phone LIKE CONCAT('%',#{phone,jdbcType=INTEGER},'%')
+      </if>
+      <if test="email != null">
+         AND email LIKE CONCAT('%',#{email,jdbcType=INTEGER},'%')
+      </if>
+      <if test="content != null">
+         AND content LIKE CONCAT('%',#{content,jdbcType=INTEGER},'%')
+      </if>
+     </trim>
+    </where>
+    
+  </select>
   
   
   <insert id="insert" parameterType="group.slsd.vo.ManVo">
@@ -111,6 +138,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <delete id="batchDeleteManByIds"  parameterType = "int[]">
+  	delete from man where id in
+		<foreach collection="array" item="arr" index="no" open="("
+			separator="," close=")">
+			#{arr}
+		</foreach>
+  </delete>
   
   
 </mapper>

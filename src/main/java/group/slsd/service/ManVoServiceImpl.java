@@ -41,4 +41,12 @@ public class ManVoServiceImpl {
 		return manVoMapper.updateByPrimaryKeySelective(manVo);
 	}
 
+	public int batchDeleteManByIds(Integer[] ids) {
+		return manVoMapper.batchDeleteManByIds(ids);
+	}
+
+	public List<ManVo> searchMansByParameter(ManVo manVO) {
+		return manVoMapper.searchMansByParameter(manVO);
+	}
+
 }

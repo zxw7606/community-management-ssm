@@ -35,6 +35,7 @@ public class DevicesController {
 		return ResponseEntity.ok("200");
 	}
 	
+	@ApiOperation("获取设备")
 	@GetMapping
 	public Object getDevices() {
 		Page<Object> page = PageHelper.startPage(1,3);

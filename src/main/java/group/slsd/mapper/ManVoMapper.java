@@ -20,4 +20,8 @@ public interface ManVoMapper {
 	int deleteByPrimaryKey(Integer manId);
 
 	int updateByPrimaryKeySelective(ManVo manVo);
+
+	int batchDeleteManByIds(Integer[] ids);
+
+	List<ManVo> searchMansByParameter(ManVo manVo);
 }
