@@ -11,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -26,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @EnableWebMvc
+@EnableAsync
 @Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -80,11 +84,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	 * 
 	 */
 
-
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("*").allowCredentials(true)
 				.allowedMethods("GET", "POST", "DELETE", "PUT").maxAge(3600);
+	}
+
+	@Override
+	public Validator getValidator() {
+		return new LocalValidatorFactoryBean();
 	}
 
 }

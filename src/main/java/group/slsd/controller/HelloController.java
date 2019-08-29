@@ -44,4 +44,12 @@ public class HelloController {
 		Assert.notNull(httpSession, "不能为空");
 		return null;
 	}
+
+	@RequestMapping("hello2")
+	public Object hello2(HttpServletRequest request) {
+		HttpSession httpSession = request.getSession();
+		Assert.notNull(httpSession, "不能为空");
+		httpSession.invalidate();
+		return "200";
+	}
 }

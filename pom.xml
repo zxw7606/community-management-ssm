@@ -25,6 +25,7 @@
 		<validator.version>6.0.15.Final</validator.version>
 		<swagger2.version>2.9.2</swagger2.version>
 		<pagehelper.version>1.2.12</pagehelper.version>
+		<aliyun.version>4.1.0</aliyun.version>
 	</properties>
 
 	<dependencies>
@@ -57,6 +58,19 @@
 			<artifactId>swagger-models</artifactId>
 			<version>1.5.21</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>${aliyun.version}</version>
+		</dependency>
+
+		<!-- 电子邮件 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 
 		<!-- Mysql 和连接池 以及 事务支持 -->
 		<dependency>

@@ -2,6 +2,7 @@ package group.slsd.vo;
 
 import java.io.Serializable;
 
+import group.slsd.validator.annotation.Phone;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
