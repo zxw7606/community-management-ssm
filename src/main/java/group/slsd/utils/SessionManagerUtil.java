@@ -2,6 +2,7 @@ package group.slsd.utils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SessionManagerUtil {
 
@@ -10,6 +11,7 @@ public class SessionManagerUtil {
 	 */
 	private static Map<Object, Integer> currentOnlineMap = new ConcurrentHashMap<Object, Integer>();
 
+	private static AtomicInteger allOnlineCount = new AtomicInteger(0);
 
 	public static void setUserOnlineCount(Object principal, Integer count) {
 		if (count == null) {
@@ -19,7 +21,19 @@ public class SessionManagerUtil {
 	}
 
 	public static Integer getUserOnlineCount(Object principal) {
-		return currentOnlineMap.get(principal);
+		Integer count = currentOnlineMap.get(principal);
+		if (null == count) {
+			return 1;
+		}
+		return count;
+	}
+
+	public static void addOnlineCount() {
+		allOnlineCount.incrementAndGet();
+	}
+
+	public static int getOnlineCount() {
+		return allOnlineCount.get();
 	}
 
 }

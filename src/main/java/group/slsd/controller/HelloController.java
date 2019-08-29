@@ -1,6 +1,10 @@
 package group.slsd.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +39,9 @@ public class HelloController {
 
 	@ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
 	@RequestMapping("hello")
-	public Object selectByPrimaryKey() {
-		System.out.println("///");
-		return ownerService.selectByPrimaryKey(0);
+	public Object selectByPrimaryKey(HttpServletRequest request) {
+		HttpSession httpSession = request.getSession(false);
+		Assert.notNull(httpSession, "不能为空");
+		return null;
 	}
 }

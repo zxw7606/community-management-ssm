@@ -6,7 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +22,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsUtils;
@@ -74,6 +78,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll();
 	}
 
+	/**
+	 * @Description：会话策略
+	 * @author 0
+	 * @date 2019年8月28日 下午6:49:52
+	 */
+
 	public class MySessionAuthenticationStrategy extends ConcurrentSessionControlAuthenticationStrategy {
 
 		public MySessionAuthenticationStrategy(SessionRegistry sessionRegistry) {
@@ -93,10 +103,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				SessionRegistry registry) throws SessionAuthenticationException {
 			SessionInformation sessionInformation = sessions.get(0);
 			Object principal = sessionInformation.getPrincipal();
-			
+
 			Integer count = SessionManagerUtil.getUserOnlineCount(principal);
 			SessionManagerUtil.setUserOnlineCount(principal, count + 1);
 
 		}
+	}
+
+	@Component
+	@Slf4j
+	public static class MyHttpSessionListener extends HttpSessionEventPublisher {
+
+		@Override
+		public void sessionCreated(HttpSessionEvent event) {
+			super.sessionCreated(event);
+
+			HttpSession session = event.getSession();
+			String id = session.getId();
+			log.info("sessionCreated id = {}", id);
+
+		}
+
+		@Override
+		public void sessionDestroyed(HttpSessionEvent event) {
+			super.sessionDestroyed(event);
+			HttpSession session = event.getSession();
+			String id = session.getId();
+			log.info("sessionDestroyed id = {}", id);
+
+		}
+
 	}
 }

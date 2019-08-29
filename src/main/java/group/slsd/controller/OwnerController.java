@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,8 +53,8 @@ public class OwnerController {
 	}
 
 	@ApiOperation(value = "根据主键查询业主", notes = "根据url的id来获取用户详细信息")
-	@GetMapping("/getOwnerById")
-	public Object selectByPrimaryKey(@RequestParam(required = true) Integer ownerId) {
+	@GetMapping("/getOwnerById/{ownerId}")
+	public Object selectByPrimaryKey(@PathVariable("ownerId") Integer ownerId) {
 		return ownerService.selectByPrimaryKey(ownerId);
 	}
 	
@@ -79,7 +80,7 @@ public class OwnerController {
 	}
 	
 	@ApiOperation("更新业主字段")
-	@PostMapping("updateownerById")
+	@PostMapping("updateOwnerById")
 	public ResponseEntity<String> updateOwnerById(@ApiParam("管理员实体")  OwnerVo ownerVo) {
 		int num = ownerService.updateByPrimaryKeySelective(ownerVo);
 		log.info(" num = {} ", num);
