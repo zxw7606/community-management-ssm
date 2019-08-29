@@ -10,22 +10,21 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface OwnerVoMapper {
-	int deleteByPrimaryKey(Integer ownerId);
-
 	int insert(OwnerVo record);
 
 	int insertSelective(OwnerVo record);
+	
+	List<OwnerVo> findAll();
 
 	OwnerVo selectByPrimaryKey(@Param("ownerId") Integer ownerId);
+	
+	int deleteByPrimaryKey(Integer ownerId);
 
 	int updateByPrimaryKeySelective(OwnerVo record);
 
 	int updateByPrimaryKey(OwnerVo record);
-	
-	List<OwnerVo> findAll();
 
 	int batchDeleteOwnerByIds(Integer[] idIntegerArr);
-
 
 	List<OwnerVo> searchOwnersByParameter(OwnerVo ownerVo);
 

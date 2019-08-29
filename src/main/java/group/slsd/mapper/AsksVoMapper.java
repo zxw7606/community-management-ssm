@@ -1,7 +1,6 @@
 package group.slsd.mapper;
 
 import group.slsd.vo.AsksVo;
-import group.slsd.vo.ManVo;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;

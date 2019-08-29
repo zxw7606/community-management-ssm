@@ -1,115 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group.slsd.mapper.DevicesVoMapper">
-  <resultMap id="BaseResultMap" type="group.slsd.vo.DevicesVo">
-    <id column="did" jdbcType="INTEGER" property="dId" />
-    <result column="dname" jdbcType="VARCHAR" property="dName" />
-    <result column="dtype" jdbcType="VARCHAR" property="dType"/>
-    <result column="duse" jdbcType="VARCHAR" property="dUse"/>
-    <result column="user" jdbcType="VARCHAR" property="dUser"/>
-    <result column="dchecktype" jdbcType="VARCHAR" property="dCheckType"/>
-  </resultMap>
-  <sql id="Base_Column_List">
-  did, dname, dtype, duse, user, dchecktype
-  </sql>
-  
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from devices
-    where did = #{dId.jdbcType=INTEGER}
-  </select>
-  
-  <select id="findAll" resultType="group.slsd.vo.DevicesVo">
-    select 
-    <include refid="Base_Column_List" />
-    from devices	
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from devices
-    where did = #{dId,jdbcType=INTEGER}
+	<resultMap id="BaseResultMap" type="group.slsd.vo.DevicesVo">
+		<id column="did" jdbcType="INTEGER" property="dId" />
+		<result column="dname" jdbcType="VARCHAR" property="dName" />
+		<result column="dtype" jdbcType="VARCHAR" property="dType" />
+		<result column="duse" jdbcType="VARCHAR" property="dUse" />
+		<result column="user" jdbcType="VARCHAR" property="dUser" />
+		<result column="dchecktype" jdbcType="VARCHAR"
+			property="dCheckType" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		did, dname, dtype, duse, user, dchecktype
+	</sql>
+
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from devices
+		where did = #{dId.jdbcType=INTEGER}
+	</select>
+
+	<select id="findAll" resultType="group.slsd.vo.DevicesVo">
+		select
+		<include refid="Base_Column_List" />
+		from devices
+	</select>
+
+	<select id="searchDevicesByParameter" resultType="group.slsd.vo.DevicesVo">
+		select
+		<include refid="Base_Column_List" />
+		from devices
+		<where>
+			<trim prefix="(" prefixOverrides="and" suffix=")">
+				<if test="dId != null">
+					AND did LIKE CONCAT('%', #{dId,jdbcType=INTEGER},'%')
+				</if>
+				<if test="dName != null">
+					AND dname LIKE CONCAT('%',#{dName,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="dType != null">
+					AND dtype LIKE CONCAT('%',#{dType,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="dUse != null">
+					AND duse LIKE CONCAT('%', #{dUse,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="dUser != null">
+					AND user LIKE CONCAT('%', #{dUser,jdbcType=INTEGER},'%')
+				</if>
+				<if test="dCheckType != null">
+					AND dchecktype LIKE CONCAT('%', #{dCheckType,jdbcType=VARCHAR},'%')
+				</if>
+			</trim>
+		</where>
+	</select>
+
+
+	<delete id="deleteByPrimaryKey"	parameterType="java.lang.Integer">
+		delete from devices
+		where did = #{dId,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="group.slsd.vo.DevicesVo">
+		insert into dervices (did,
+		dname, dtype, duse, user, dchecktype)
+		values (#{DId,jdbcType=INTEGER},
+		#{dName,jdbcType=VARCHAR},
+		#{dType,jdbcType=VARCHAR},
+		#{dUse,jdbcType=VARCHAR},
+		#{dUser,jdbcType=INTEGER},
+		#{dCheckType,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="group.slsd.vo.DevicesVo">
+		insert into devices
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dId != null">
+				did,
+			</if>
+			<if test="dName != null">
+				dname,
+			</if>
+			<if test="dType != null">
+				dtype,
+			</if>
+			<if test="dUse != null">
+				duse,
+			</if>
+			<if test="dUser != null">
+				user,
+			</if>
+			<if test="dCheckType != null">
+				dchecktype,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dId != null">
+				#{DId,jdbcType=INTEGER},
+			</if>
+			<if test="dName != null">
+				#{dName,jdbcType=VARCHAR},
+			</if>
+			<if test="dType != null">
+				#{dType,jdbcType=VARCHAR},
+			</if>
+			<if test="dUse != null">
+				#{dUse,jdbcType=VARCHAR},
+			</if>
+			<if test="dUser != null">
+				#{dUser,jdbcType=INTEGER},
+			</if>
+			<if test="dCheckType != null">
+				#{dCheckType,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.DevicesVo">
+		update devices
+		<set>
+			<if test="dName != null">
+				dname = #{dName,jdbcType=VARCHAR},
+			</if>
+			<if test="dType != null">
+				dtype = #{dType,jdbcType=VARCHAR},
+			</if>
+			<if test="dUse != null">
+				duse = #{dUse,jdbcType=VARCHAR},
+			</if>
+			<if test="dUser != null">
+				user = #{dUser,jdbcType=INTEGER},
+			</if>
+			<if test="dCheckType != null">
+				dchecktype = #{dCheckType,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where did = #{dId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="group.slsd.vo.DevicesVo">
+		update dervice
+		set dname = #{dName,jdbcType=VARCHAR},
+		dtype = #{dType,jdbcType=VARCHAR},
+		duse = #{dUse,jdbcType=VARCHAR},
+		user = #{dUser,jdbcType=INTEGER},
+		dchecktype =
+		#{dCheckType,jdbcType=VARCHAR}
+		where did = #{dId,jdbcType=INTEGER}
+	</update>
+	 
+	<delete id="batchDeleteDevicesByIds"  parameterType = "int[]">
+  		delete from devices where did in
+		<foreach collection="array" item="arr" index="no" open="("
+			separator="," close=")">
+			#{arr}
+		</foreach>
   </delete>
-  
-  <insert id="insert" parameterType="group.slsd.vo.DevicesVo">
-    insert into dervices (did, dname, dtype, duse, user, dchecktype)
-    values (#{DId,jdbcType=INTEGER}, #{dName,jdbcType=VARCHAR}, 
-      #{dType,jdbcType=VARCHAR}, #{dUse,jdbcType=VARCHAR}, #{dUser,jdbcType=INTEGER},
-      #{dCheckType,jdbcType=VARCHAR})
-  </insert>
-  
-  <insert id="insertSelective" parameterType="group.slsd.vo.DevicesVo">
-    insert into devices
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-    	<if test="dId != null">
-       	 did,
-      	</if>
-      	<if test="dName != null">
-       	 dname,
-      	</if>
-      	<if test="dType != null">
-       	 dtype,
-      	</if>
-      	<if test="dUse != null">
-       	 duse,
-      	</if>
-      	<if test="dUser != null">
-       	 user,
-      	</if>
-      	<if test="dCheckType != null">
-       	 dchecktype,
-      	</if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-    	<if test="dId != null">
-       	 #{DId,jdbcType=INTEGER},
-      	</if>
-      	<if test="dName != null">
-       	  #{dName,jdbcType=VARCHAR}, 
-      	</if>
-      	<if test="dType != null">
-    	  #{dType,jdbcType=VARCHAR},
-      	</if>
-      	<if test="dUse != null">
-       	  #{dUse,jdbcType=VARCHAR},
-      	</if>
-      	<if test="dUser != null">
-       	  #{dUser,jdbcType=INTEGER},
-      	</if>
-      	<if test="dCheckType != null">
-          #{dCheckType,jdbcType=VARCHAR},
-      	</if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.DevicesVo">
-    update devices
-    <set>
-      <if test="dName != null">
-        dname = #{dName,jdbcType=VARCHAR},
-      </if>
-      <if test="dType != null">
-        dtype = #{dType,jdbcType=VARCHAR},
-      </if>
-      <if test="dUse != null">
-       duse = #{dUse,jdbcType=VARCHAR},
-      </if>
-      <if test="dUser != null">
-       	user = #{dUser,jdbcType=INTEGER},
-      </if>
-      <if test="dCheckType != null">
-        dchecktype = #{dCheckType,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where did = #{dId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.DevicesVo">
-  	update dervice
-  	set dname = #{dName,jdbcType=VARCHAR},
-  	  dtype = #{dType,jdbcType=VARCHAR},
-      duse = #{dUse,jdbcType=VARCHAR},
-      user = #{dUser,jdbcType=INTEGER},
-      dchecktype = #{dCheckType,jdbcType=VARCHAR}
-    where did = #{dId,jdbcType=INTEGER} 
-  </update>
+	
 </mapper>
   
