@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,5 +53,12 @@ public class HelloController {
 		Assert.notNull(httpSession, "不能为空");
 		httpSession.invalidate();
 		return "200";
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+//	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping("hello3")
+	public Object hello3(HttpServletRequest request,HttpServletRequest response) {
+		return request.getCharacterEncoding() + response.getCharacterEncoding();
 	}
 }

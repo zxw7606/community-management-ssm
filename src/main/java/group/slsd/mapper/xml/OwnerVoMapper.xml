@@ -27,6 +27,22 @@
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </select>
   
+  	<select id="selectOwnerByUsername" resultMap="BaseResultMap">
+		select 
+ 			<include refid="Base_Column_List" />
+		from owner
+		where uname = #{uname,jdbcType=VARCHAR}
+	</select>
+  
+    	<select id="selectOwnerByUsernameAndPassword" resultMap="BaseResultMap">
+		select 
+ 			<include refid="Base_Column_List" />
+		from owner
+		where uname = #{uname,jdbcType=VARCHAR} and pwd = #{uname,jdbcType=VARCHAR
+	</select>
+  
+  
+  
    <select id="findAll" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

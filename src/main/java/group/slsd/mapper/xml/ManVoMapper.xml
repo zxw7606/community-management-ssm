@@ -26,8 +26,16 @@
  		<include refid="Base_Column_List" />
 		from man
 	</select>
+	
+	<select id="selectManByUsername" resultMap="BaseResultMap">
+		select 
+ 			<include refid="Base_Column_List" />
+		from man
+		where username = #{username,jdbcType=VARCHAR}
+	</select>
+	
 
-	<select id="searchMansByParameter"	resultType="group.slsd.vo.ManVo">
+	<select id="searchMansByParameter"	resultMap="BaseResultMap">
 		select id, username, pwd, phone, email, content
 		from man
 		<where>
@@ -36,19 +44,19 @@
 					AND id LIKE CONCAT('%',#{id,jdbcType=INTEGER},'%')
 				</if>
 				<if test="username != null">
-					AND username LIKE CONCAT('%',#{username,jdbcType=INTEGER},'%')
+					AND username LIKE CONCAT('%',#{username,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="pwd != null">
-					AND pwd LIKE CONCAT('%',#{pwd,jdbcType=INTEGER},'%')
+					AND pwd LIKE CONCAT('%',#{pwd,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="phone != null">
-					AND phone LIKE CONCAT('%',#{phone,jdbcType=INTEGER},'%')
+					AND phone LIKE CONCAT('%',#{phone,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="email != null">
-					AND email LIKE CONCAT('%',#{email,jdbcType=INTEGER},'%')
+					AND email LIKE CONCAT('%',#{email,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="content != null">
-					AND content LIKE CONCAT('%',#{content,jdbcType=INTEGER},'%')
+					AND content LIKE CONCAT('%',#{content,jdbcType=VARCHAR},'%')
 				</if>
 			</trim>
 		</where>

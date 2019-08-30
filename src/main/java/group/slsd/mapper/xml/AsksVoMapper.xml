@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="group.slsd.vo.AsksVo">
     <id column="aid" jdbcType="INTEGER" property="aId" />
     <result column="atarget" jdbcType="VARCHAR" property="aTarget" />
+    <result column="owner_nmae" jdbcType="VARCHAR" property="ownerName" />
+    <result column="man_name" jdbcType="VARCHAR" property="manName" />
     <result column="content" jdbcType="VARCHAR" property="aContent" />
     <result column="personid" jdbcType="INTEGER" property="aPersonId" />
     <result column="empid" jdbcType="INTEGER" property="aEmpId" />
@@ -12,7 +14,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-  	aid, atarget, content, personid, empid, result, time
+  	aid, atarget, owner_nmae, man_name, content, personid, empid, result, time
   </sql>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -22,7 +24,7 @@
     where id = #{aid,jdbcType=INTEGER}
   </select>
   
-  <select id="findAll" resultType="group.slsd.vo.AsksVo">
+  <select id="findAll" resultMap="BaseResultMap">
     select 
 	<include refid="Base_Column_List" />
     from asks
@@ -30,7 +32,7 @@
     
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from asks
-    where id = #{aId,jdbcType=INTEGER}
+    where aid = #{aId,jdbcType=INTEGER}
   </delete>
   
   <insert id="insert" parameterType="group.slsd.vo.AsksVo">
@@ -41,12 +43,18 @@
   
   <insert id="insertSelective" parameterType="group.slsd.vo.AsksVo">
     insert into asks
-    <trim prefix="(" suffix=")" suffixOverrides=",">
+     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="aId != null">
         aid,
       </if>
       <if test="aTarget != null">
         atarget,
+      </if>
+      <if test="ownerName != null">
+        owner_nmae,
+      </if>
+      <if test="manName != null">
+        man_name,
       </if>
       <if test="aContent != null">
         content,
@@ -71,6 +79,12 @@
       <if test="aTarget != null">
         #{aTarget,jdbcType=VARCHAR}, 
       </if>
+       <if test="ownerName != null">
+        #{ownerName,jdbcType=VARCHAR}, 
+      </if>
+       <if test="manName != null">
+        #{manName,jdbcType=VARCHAR}, 
+      </if>
       <if test="aContent != null">
         #{aContent,jdbcType=VARCHAR},
       </if>
@@ -84,7 +98,7 @@
         #{aResult,jdbcType=VARCHAR},
       </if>
       <if test="aTime != null">
-         #{aTime,jdbcType=DATE},
+         #{aTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -95,6 +109,12 @@
     <set>
       <if test="aTarget != null">
        atarget = #{aTarget,jdbcType=VARCHAR}, 
+      </if>
+      <if test="ownerNmae != null">
+        #{ownerNmae,jdbcType=VARCHAR}, 
+      </if>
+       <if test="manNname != null">
+        #{manNname,jdbcType=VARCHAR}, 
       </if>
       <if test="aContent != null">
        content = #{aContent,jdbcType=VARCHAR},
@@ -134,7 +154,7 @@
 		</foreach>
   </delete>
     
-  <select id="searchAsksByParameter" resultType="group.slsd.vo.AsksVo">
+  <select id="searchAsksByParameter" resultMap="BaseResultMap">
      select 
   	<include refid="Base_Column_List" />
      from asks
@@ -146,6 +166,7 @@
       <if test="aContent != null">
        AND content LIKE CONCAT('%', #{aContent,jdbcType=VARCHAR},'%')
       </if>
+      
       <if test="aPersonId != null">
        AND personid LIKE CONCAT('%', #{aPersonId,jdbcType=INTEGER},'%') 
       </if>

@@ -65,4 +65,9 @@ public class OwnerServiceImpl implements OwnerService {
 		return ownerVoMapper.searchOwnersByParameter(ownerVo);
 	}
 
+	@Override
+	public List<OwnerVo> selectOwnerByUsername(String username) {
+		return ownerVoMapper.selectOwnerByUsername(username);
+	}
+
 }

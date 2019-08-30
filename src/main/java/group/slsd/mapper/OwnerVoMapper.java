@@ -28,4 +28,6 @@ public interface OwnerVoMapper {
 
 	List<OwnerVo> searchOwnersByParameter(OwnerVo ownerVo);
 
+	List<OwnerVo> selectOwnerByUsername(String username);
+
 }

@@ -42,8 +42,14 @@ import com.aliyuncs.profile.DefaultProfile;
 import group.slsd.validator.PhoneConstraintValidator;
 import group.slsd.validator.SimplePhoneValidator;
 import group.slsd.validator.annotation.Phone;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import springfox.documentation.annotations.ApiIgnore;
 
+
+@Api(tags = "验证码接口")
 @RestController
 @RequestMapping("code")
 @Slf4j
@@ -53,7 +59,7 @@ public class VerificationController {
 	// 手机号验证
 	private Pattern p = Pattern.compile("^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$");
 	public static final String CODE = "CODE";
-	public static final String EXPIRE_TIME = "EXPIRE_TIME";
+	public static final String CODE_CREATE_TIME = "CODE_CREATE_TIME";
 
 	private String accessKeyId;
 
@@ -82,12 +88,13 @@ public class VerificationController {
 	 * @return ：Callable<String>
 	 */
 	@PostMapping("sendCodeByEmail")
-	public Callable<String> sendCodeByEmail(String email, HttpServletRequest request) {
+	@ApiOperation("发送电子邮件验证码")
+	public Callable<String> sendCodeByEmail(@ApiParam("邮箱号码") String email, @ApiIgnore HttpServletRequest request) {
 
 		String code = "123456";
 		HttpSession session = request.getSession();
 		session.setAttribute(CODE, code);
-		session.setAttribute(EXPIRE_TIME, System.currentTimeMillis());
+		session.setAttribute(CODE_CREATE_TIME, System.currentTimeMillis());
 
 		return new Callable<String>() {
 			@Override
@@ -97,7 +104,7 @@ public class VerificationController {
 					MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
 					messageHelper.setFrom(((JavaMailSenderImpl) mailSender).getUsername());
 					messageHelper.setTo(email);
-					messageHelper.setSubject("[小.区.物.业]>");
+					messageHelper.setSubject("小区物业验证码");
 					String html = "<html><p>验证码:" + code + "</p></html>";
 					messageHelper.setText(html, true);
 					mailSender.send(message);
@@ -120,7 +127,8 @@ public class VerificationController {
 	 *                \"BizId\":\"628218067090138941^0\", \"Code\":\"OK\" }"
 	 */
 	@PostMapping("sendCodeBySMS")
-	public Callable<ResponseEntity<String>> sendCodeBySMS(@RequestParam String phone, HttpServletRequest request) {
+	@ApiOperation("发送手机验证码")
+	public Callable<ResponseEntity<String>> sendCodeBySMS(@ApiParam("手机号码") @RequestParam String phone, @ApiIgnore HttpServletRequest request) {
 		return new Callable<ResponseEntity<String>>() {
 			@Override
 			public ResponseEntity<String> call() {
@@ -132,7 +140,7 @@ public class VerificationController {
 				String code = "123456";
 				HttpSession session = request.getSession();
 				session.setAttribute(CODE, code);
-				session.setAttribute(EXPIRE_TIME, System.currentTimeMillis());
+				session.setAttribute(CODE_CREATE_TIME, System.currentTimeMillis());
 
 				DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessSecret);
 				IAcsClient client = new DefaultAcsClient(profile);

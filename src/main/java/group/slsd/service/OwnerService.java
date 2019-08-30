@@ -24,4 +24,6 @@ public interface OwnerService {
 	int batchDeleteOwnerByIds(Integer[] idIntegerArr);
 
 	List<OwnerVo> searchOwnersByParameter(OwnerVo ownerVo);
+
+	List<OwnerVo> selectOwnerByUsername(String username);
 }

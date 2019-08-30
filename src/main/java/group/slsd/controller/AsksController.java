@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,12 +62,17 @@ public class AsksController {
 		for (AsksVo asksVo : Askslist) {
 			HashMap<String, Object> asksVoDetailMap = new HashMap<String, Object>();
 			OwnerVo ownerVo = ownerService.selectByPrimaryKey(asksVo.getaPersonId());
-			// WorkerVo workerVo = workerService.selectByPrimaryKey(asksVo.getaEmpId());
+			if (ownerVo != null) {
+				asksVo.setOwnerName(ownerVo.getOwnerName());
+				asksVoDetailMap.put("owner", ownerVo);
+			}
 			ManVo manVo = manVoService.selectByPrimaryKey(asksVo.getaEmpId());
-			asksVoDetailMap.put("owner", ownerVo);
-			asksVoDetailMap.put("asks", asksVo);
-			asksVoDetailMap.put("man", manVo);
+			if (manVo != null) {
+				asksVo.setManName(manVo.getUsername());
+				asksVoDetailMap.put("man", manVo);
+			}
 
+			asksVoDetailMap.put("asks", asksVo);
 			asksVoDetailMapList.add(asksVoDetailMap);
 		}
 		return asksVoDetailMapList;

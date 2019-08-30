@@ -3,6 +3,10 @@ package group.slsd.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -15,6 +19,12 @@ public class AsksVo implements Serializable {
 
 	@ApiModelProperty("投诉对象")
 	private String aTarget;
+	
+	@ApiModelProperty("投诉人对象")
+	private String ownerName;
+	
+	@ApiModelProperty("被投诉人")
+	private String manName;
 
 	@ApiModelProperty("投诉内容")
 	private String aContent;
@@ -29,6 +39,8 @@ public class AsksVo implements Serializable {
 	private String aResult;
 
 	@ApiModelProperty("受理时间")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date aTime;
 	
 	private static final long serialVersionUID = 1L;
@@ -88,5 +100,23 @@ public class AsksVo implements Serializable {
 	public void setaTime(Date aTime) {
 		this.aTime = aTime ;
 	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getManName() {
+		return manName;
+	}
+
+	public void setManName(String manName) {
+		this.manName = manName;
+	}
+
+
 	
 }

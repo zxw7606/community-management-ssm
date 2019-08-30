@@ -24,4 +24,6 @@ public interface ManVoMapper {
 	int batchDeleteManByIds(Integer[] ids);
 
 	List<ManVo> searchMansByParameter(ManVo manVo);
+
+	List<ManVo> selectManByUsername(String username);
 }

@@ -50,4 +50,9 @@ public class ManVoServiceImpl {
 		return manVoMapper.searchMansByParameter(manVO);
 	}
 
+
+	public List<ManVo> selectManByUsername(String username) {
+		return manVoMapper.selectManByUsername(username);
+	}
+
 }

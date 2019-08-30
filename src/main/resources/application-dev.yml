@@ -1,7 +1,8 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://192.168.213.128:3307/manager?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF8
+#    url: jdbc:mysql://192.168.213.128:3307/manager?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.213.128:3307/manager?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -15,6 +16,11 @@ spring:
       mail.stmp.auth: true
       mail.stmp.socketFactory.class: sun.security.ssl.SSLSocketFactoryImpl
       mail.stmp.socketFactory.fallback: false
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
 logging:
   level:
     org.springframework.security: DEBUG
