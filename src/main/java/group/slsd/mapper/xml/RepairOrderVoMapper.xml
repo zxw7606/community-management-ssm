@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.slsd.mapper.RepairOrderVoMapper">
+  <resultMap id="BaseResultMap" type="group.slsd.vo.RepairOrderVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="trade_name" jdbcType="VARCHAR" property="tradeName" />
+    <result column="owner_id" jdbcType="INTEGER" property="ownerId" />
+    <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+    <result column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="total_mount" jdbcType="DECIMAL" property="totalMount" />
+    <result column="trade_status" jdbcType="CHAR" property="tradeStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, out_trade_no, trade_no, trade_name, owner_id, owner_name, emp_id, emp_name, num, 
+    total_mount, trade_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repair_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOutTradeNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repair_order
+    where out_trade_no = #{out_trade_no,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from repair_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="group.slsd.vo.RepairOrderVo">
+    insert into repair_order (id, out_trade_no, trade_no, 
+      trade_name, owner_id, owner_name, 
+      emp_id, emp_name, num, 
+      total_mount, trade_status)
+    values (#{id,jdbcType=INTEGER}, #{outTradeNo,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, 
+      #{tradeName,jdbcType=VARCHAR}, #{ownerId,jdbcType=INTEGER}, #{ownerName,jdbcType=VARCHAR}, 
+      #{empId,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
+      #{totalMount,jdbcType=DECIMAL}, #{tradeStatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="group.slsd.vo.RepairOrderVo">
+    insert into repair_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="tradeNo != null">
+        trade_no,
+      </if>
+      <if test="tradeName != null">
+        trade_name,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="ownerName != null">
+        owner_name,
+      </if>
+      <if test="empId != null">
+        emp_id,
+      </if>
+      <if test="empName != null">
+        emp_name,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="totalMount != null">
+        total_mount,
+      </if>
+      <if test="tradeStatus != null">
+        trade_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null">
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerName != null">
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null">
+        #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="empName != null">
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="totalMount != null">
+        #{totalMount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeStatus != null">
+        #{tradeStatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.RepairOrderVo">
+    update repair_order
+    <set>
+      <if test="outTradeNo != null">
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null">
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null">
+        trade_name = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerName != null">
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null">
+        emp_id = #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="empName != null">
+        emp_name = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="totalMount != null">
+        total_mount = #{totalMount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeStatus != null">
+        trade_status = #{tradeStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.RepairOrderVo">
+    update repair_order
+    set out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      trade_name = #{tradeName,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=INTEGER},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      emp_id = #{empId,jdbcType=INTEGER},
+      emp_name = #{empName,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      total_mount = #{totalMount,jdbcType=DECIMAL},
+      trade_status = #{tradeStatus,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

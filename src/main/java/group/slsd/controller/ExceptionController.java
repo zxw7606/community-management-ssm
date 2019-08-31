@@ -8,14 +8,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @ControllerAdvice
 public class ExceptionController {
 
-	
 	@ResponseBody
-	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<String> Forbidden(){
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("forbidden");
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> exception(Exception e) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 }

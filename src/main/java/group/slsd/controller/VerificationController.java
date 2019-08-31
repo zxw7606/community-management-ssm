@@ -24,6 +24,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 
+import group.slsd.utils.CodeUtil;
 import group.slsd.validator.PhoneConstraintValidator;
 import group.slsd.validator.SimplePhoneValidator;
 import group.slsd.validator.annotation.Phone;
@@ -58,7 +60,7 @@ public class VerificationController {
 
 	// 手机号验证
 	private Pattern p = Pattern.compile("^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$");
-	public static final String CODE = "CODE";
+	public static final String CODE = "code";
 	public static final String CODE_CREATE_TIME = "CODE_CREATE_TIME";
 
 	private String accessKeyId;
@@ -68,14 +70,14 @@ public class VerificationController {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@PostMapping("test")
-	public ResponseEntity<String> refreshVerificationCode(String phone) {
-
-		Assert.notNull(accessKeyId, "不能为空");
-		Assert.hasText(phone, "电话号码不能为空");
-
-		log.info("phone: {}", phone);
-		return ResponseEntity.ok("200");
+	@GetMapping("sendCodeTest")
+	@ApiOperation("测试验证码")
+	public ResponseEntity<String> refreshVerificationCode(@ApiIgnore HttpServletRequest request) {
+		String code = CodeUtil.getCode();
+		HttpSession session = request.getSession();
+		session.setAttribute(CODE, code);
+		session.setAttribute(CODE_CREATE_TIME, System.currentTimeMillis());
+		return ResponseEntity.ok(code);
 	}
 
 	/**
@@ -90,8 +92,7 @@ public class VerificationController {
 	@PostMapping("sendCodeByEmail")
 	@ApiOperation("发送电子邮件验证码")
 	public Callable<String> sendCodeByEmail(@ApiParam("邮箱号码") String email, @ApiIgnore HttpServletRequest request) {
-
-		String code = "123456";
+		String code = CodeUtil.getCode();
 		HttpSession session = request.getSession();
 		session.setAttribute(CODE, code);
 		session.setAttribute(CODE_CREATE_TIME, System.currentTimeMillis());

@@ -1,6 +1,10 @@
 package group.slsd.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +45,18 @@ public class HelloController {
 
 	@ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
 	@RequestMapping("hello")
-	public Object selectByPrimaryKey(HttpServletRequest request) {
-		HttpSession httpSession = request.getSession(false);
-		Assert.notNull(httpSession, "不能为空");
+	public Object selectByPrimaryKey(HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			response.getWriter().write("你好啊");
+			response.getWriter().flush();
+			request.getRequestDispatcher("/hello2").forward(request, response);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServletException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
@@ -54,11 +67,11 @@ public class HelloController {
 		httpSession.invalidate();
 		return "200";
 	}
-	
-	@Secured({"ROLE_ADMIN"})
-//	@PreAuthorize("hasAuthority('admin')")
+
+	@Secured({ "ROLE_ADMIN" })
+	// @PreAuthorize("hasAuthority('admin')")
 	@RequestMapping("hello3")
-	public Object hello3(HttpServletRequest request,HttpServletRequest response) {
+	public Object hello3(HttpServletRequest request, HttpServletRequest response) {
 		return request.getCharacterEncoding() + response.getCharacterEncoding();
 	}
 }

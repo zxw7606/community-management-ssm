@@ -1,6 +1,8 @@
 package group.slsd.config.filter;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -34,7 +36,7 @@ public class LoginVerifyCodeFilter extends GenericFilterBean {
 	private String codeCreateTimeName;
 
 	@NonNull
-	private Long codeliveTime;
+	private long codeliveTime;
 
 	public LoginVerifyCodeFilter() {
 		antPathRequestMatcher = new AntPathRequestMatcher("/login", "POST");
@@ -58,19 +60,29 @@ public class LoginVerifyCodeFilter extends GenericFilterBean {
 		}
 		// 拦截验证码登录
 		HttpSession session = httpRequest.getSession(false);
-		if (session == null || request.getAttribute(requestCodeName) == null) {
+		String verifyCode = (String) request.getParameter(requestCodeName) ;
+		
+		if (session == null || verifyCode == null) {
 			// chain.doFilter(request, response); 验证失败
 			sendMsg(httpResponse, new String("验证码不存在".getBytes(),"UTF-8"));
 			return;
 		}
-		Long oldTime = (Long) session.getAttribute(codeCreateTimeName);
-		if (expire(oldTime, System.currentTimeMillis())) {
+		long oldTime = (long) session.getAttribute(codeCreateTimeName);
+		
+		long currentTimeMillis = System.currentTimeMillis();
+//		String oldTimeS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(oldTime));
+//		String newTimeS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(currentTimeMillis));
+//		String expireTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(oldTime+codeliveTime));
+//		log.info("oldTimeS:{}",oldTimeS);
+//		log.info("newTimeS:{}",newTimeS);
+//		log.info("expireTime:{}",expireTime);
+		
+		
+		if (expire(oldTime, currentTimeMillis)) {
 			sendMsg(httpResponse, "验证码超时");
 			return;
 		}
 		String rawCode = (String) session.getAttribute(requestCodeName);
-		String verifyCode = (String) request.getAttribute(requestCodeName);
-
 		// 验证失败
 		if (!rawCode.equals(verifyCode)) {
 			sendMsg(httpResponse, "验证码错误");
@@ -115,14 +127,15 @@ public class LoginVerifyCodeFilter extends GenericFilterBean {
 		this.codeCreateTimeName = codeCreateTimeName;
 	}
 
-	public Long getCodeliveTime() {
+	public long getCodeliveTime() {
 		return codeliveTime;
 	}
 
-	public void setCodeliveTime(long codeliveTime2) {
+	public void setCodeliveTime(long codeliveTime) {
 		this.codeliveTime = codeliveTime;
-		
 	}
+
+
 	
 	
 

@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		LoginVerifyCodeFilter verifyCodeFilter = new LoginVerifyCodeFilter("/loginVerify");
 		verifyCodeFilter.setCodeCreateTimeName(VerificationController.CODE_CREATE_TIME);
 		verifyCodeFilter.setRequestCodeName(VerificationController.CODE);
-		verifyCodeFilter.setCodeliveTime(60000L);
+		verifyCodeFilter.setCodeliveTime(60000);
 		return verifyCodeFilter;
 	}
 
