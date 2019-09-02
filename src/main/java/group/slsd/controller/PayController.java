@@ -50,7 +50,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
-@Api(tags = "维修单的创建")
+@Api(tags = "缴费单")
 @RestController
 @RequestMapping("pay")
 @PropertySource("classpath:alipay.properties")
@@ -103,6 +103,13 @@ public class PayController {
 
 	}
 
+	@ApiOperation("获取所有维修单")
+	@GetMapping("getRepairOrder")
+	public List<RepairOrderVo> getRepairOrder() {
+		List<RepairOrderVo> reList = repairOrderService.findAll();
+		return reList;
+	}
+
 	@ApiOperation("支付网页端维修单")
 	@Transactional
 	@GetMapping("payWebRepairOrder/{id}/{totalMount}")
@@ -135,10 +142,10 @@ public class PayController {
 		model.setTotalAmount(totalAmount); // 必填
 
 		model.setTimeoutExpress("15m");
-		
+
 		AlipayTradePagePayRequest alipay_request = new AlipayTradePagePayRequest();
 		alipay_request.setBizModel(model);
-		
+
 		// 设置同步地址
 		alipay_request.setReturnUrl(return_url);
 		alipay_request.setReturnUrl(notify_url);

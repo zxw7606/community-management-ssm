@@ -1,5 +1,7 @@
 package group.slsd.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,10 @@ public class RepairOrderServiceImpl {
 
 	public RepairOrderVo selectByOutTradeNo(String out_trade_no) {
 		return repairOrderVoMapper.selectByOutTradeNo(out_trade_no);
+	}
+
+	public List<RepairOrderVo> findAll() {
+		return repairOrderVoMapper.findAll();
 	}
 
 }

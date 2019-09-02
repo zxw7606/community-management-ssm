@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.slsd.mapper.CarPostionVoMapper">
+  <resultMap id="BaseResultMap" type="group.slsd.vo.CarPostionVo">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="isuse" jdbcType="BIT" property="isuse" />
+    <result column="money" jdbcType="REAL" property="money" />
+    <result column="paytype" jdbcType="VARCHAR" property="paytype" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, pid, isuse, money, paytype
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from carpostion
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from carpostion
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from carpostion
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="group.slsd.vo.CarPostionVo">
+    insert into carpostion (cid, pid, isuse, 
+      money, paytype)
+    values (#{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{isuse,jdbcType=BIT}, 
+      #{money,jdbcType=REAL}, #{paytype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="group.slsd.vo.CarPostionVo">
+    insert into carpostion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="isuse != null">
+        isuse,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="paytype != null">
+        paytype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isuse != null">
+        #{isuse,jdbcType=BIT},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="paytype != null">
+        #{paytype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="group.slsd.vo.CarPostionVo">
+    update carpostion
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isuse != null">
+        isuse = #{isuse,jdbcType=BIT},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="paytype != null">
+        paytype = #{paytype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="group.slsd.vo.CarPostionVo">
+    update carpostion
+    set pid = #{pid,jdbcType=INTEGER},
+      isuse = #{isuse,jdbcType=BIT},
+      money = #{money,jdbcType=REAL},
+      paytype = #{paytype,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>
